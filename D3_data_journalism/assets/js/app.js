@@ -24,19 +24,19 @@ var svgWidth = 980;
   var chosenXAxis = "poverty";
   var chosenYAxis = "healthcare";
 
-  function xScale(acsData, chosenXAxis) {
+  function xScale(Data, chosenXAxis) {
     var xLinearScale = d3.scaleLinear()
-      .domain([d3.min(acsData, d => d[chosenXAxis]) * 0.8,
-        d3.max(acsData, d => d[chosenXAxis]) * 1.2
+      .domain([d3.min(Data, d => d[chosenXAxis]) * 0.8,
+        d3.max(Data, d => d[chosenXAxis]) * 1.2
       ])
       .range([0, width]);
     return xLinearScale;
   }
 
-  function yScale(acsData, chosenYAxis) {
+  function yScale(Data, chosenYAxis) {
     var yLinearScale = d3.scaleLinear()
-      .domain([d3.min(acsData, d => d[chosenYAxis]) * 0.8,
-        d3.max(acsData, d => d[chosenYAxis]) * 1.2
+      .domain([d3.min(Data, d => d[chosenYAxis]) * 0.8,
+        d3.max(Data, d => d[chosenYAxis]) * 1.2
       ])
       .range([height, 0]);
     return yLinearScale;
@@ -124,10 +124,10 @@ var svgWidth = 980;
     return circlesGroup;
   }
 
-  d3.csv("assets/data/data.csv")
-    .then(function(acsData) {
+  d3.csv("assets/data/data.csv").then(function(Data,err) {
+    if (err) throw err;
 
-    acsData.forEach(function(data) {
+    Data.forEach(function(data) {
       data.poverty = +data.poverty;
       data.age = +data.age;
       data.income = +data.income;
@@ -136,8 +136,8 @@ var svgWidth = 980;
       data.smokes = +data.smokes;
     });
 
-    var xLinearScale = xScale(acsData, chosenXAxis);
-    var yLinearScale = yScale(acsData, chosenYAxis);
+    var xLinearScale = xScale(Data, chosenXAxis);
+    var yLinearScale = yScale(Data, chosenYAxis);
 
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
@@ -152,7 +152,7 @@ var svgWidth = 980;
       .call(leftAxis);
 
     var circlesGroup = chartGroup.selectAll(".stateCircle")
-      .data(acsData)
+      .data(Data)
       .enter()
       .append("circle")
       .attr("cx", d => xLinearScale(d[chosenXAxis]))
@@ -162,7 +162,7 @@ var svgWidth = 980;
       .attr("opacity", ".75");
 
     var textGroup = chartGroup.selectAll(".stateText")
-      .data(acsData)
+      .data(Data)
       .enter()
       .append("text")
       .attr("x", d => xLinearScale(d[chosenXAxis]))
