@@ -109,14 +109,14 @@ var svgWidth = 980;
       });
     circlesGroup.call(toolTip);
     circlesGroup.on("mouseover", function(data) {
-      toolTip.show(data, this);
+      toolTip.show(data);
     })
       .on("mouseout", function(data) {
         toolTip.hide(data);
       });
     textGroup.call(toolTip);
     textGroup.on("mouseover", function(data) {
-      toolTip.show(data, this);
+      toolTip.show(data);
     })
       .on("mouseout", function(data) {
         toolTip.hide(data);
@@ -230,7 +230,7 @@ var svgWidth = 980;
       .classed("inactive", true)
       .text("Obese (%)");
 
-    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup);
+    // var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup);
 
   });
 // makeResponsive();
