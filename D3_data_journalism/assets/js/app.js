@@ -42,7 +42,7 @@ var svgWidth = 980;
     return yLinearScale;
   }
 
-  function renderXAxes(newXScale, xAxis) {
+  function XAxes(newXScale, xAxis) {
     var bottomAxis = d3.axisBottom(newXScale);
     xAxis.transition()
       .duration(1000)
@@ -50,7 +50,7 @@ var svgWidth = 980;
     return xAxis;
   }
 
-  function renderYAxes(newYScale, yAxis) {
+  function YAxes(newYScale, yAxis) {
     var leftAxis = d3.axisLeft(newYScale);
     yAxis.transition()
       .duration(1000)
@@ -58,7 +58,7 @@ var svgWidth = 980;
     return yAxis;
   }
 
-  function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+  function rCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
 
     circlesGroup.transition()
       .duration(1000)
@@ -67,7 +67,7 @@ var svgWidth = 980;
     return circlesGroup;
   }
 
-  function renderText(textGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+  function Text(textGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
 
     textGroup.transition()
       .duration(1000)
@@ -80,29 +80,31 @@ var svgWidth = 980;
 
   function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
 
+    var label;
+
     if (chosenXAxis === "poverty") {
-      var xLabel = "Poverty (%)";
+      label = "Poverty (%)";
     }
     else if (chosenXAxis === "age") {
-      var xLabel = "Age (Median)";
+      label = "Age (Median)";
     }
     else {
-      var xLabel = "Household Income (Median)";
+      label = "Household Income (Median)";
     }
     if (chosenYAxis === "healthcare") {
-      var yLabel = "Lacks Healthcare (%)";
+      label = "Lacks Healthcare (%)";
     }
     else if (chosenYAxis === "obesity") {
-      var yLabel = "Obese (%)";
+      label = "Obese (%)";
     }
     else {
-      var yLabel = "Smokes (%)";
+      label = "Smokes (%)";
     }
 
     var toolTip = d3.tip()
-      .attr("class", "tooltip d3-tip")
-      .offset([90, 90])
-      .html(function(d) {
+    .attr("class", "tooltip")
+    .offset([80, -60])
+    .html(function(d) {
         return (`<strong>${d.abbr}</strong><br>${xLabel} ${d[chosenXAxis]}<br>${yLabel} ${d[chosenYAxis]}`);
       });
     circlesGroup.call(toolTip);
@@ -178,7 +180,7 @@ var svgWidth = 980;
     var povertyLabel = xLabelsGroup.append("text")
       .attr("x", 0)
       .attr("y", 20)
-      .attr("value", "poverty") // Value to Grab for Event Listener
+      .attr("value", "poverty") 
       .classed("active", true)
       .text("Poverty (%)");
 
@@ -231,6 +233,6 @@ var svgWidth = 980;
     var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup);
 
   });
-makeResponsive();
+// makeResponsive();
 
-d3.select(window).on("resize", makeResponsive);
+// d3.select(window).on("resize", makeResponsive);
