@@ -147,18 +147,18 @@ var svgWidth = 980;
       .attr("transform", `translate(0, ${height})`)
       .call(bottomAxis);
 
-    var yAxis = chartGroup.append("g")
-      .classed("y-axis", true)
+      chartGroup.append("g")
       .call(leftAxis);
 
-    var circlesGroup = chartGroup.selectAll(".stateCircle")
+    var circlesGroup = chartGroup.selectAll("circle")
       .data(Data)
       .enter()
       .append("circle")
       .attr("cx", d => xLinearScale(d[chosenXAxis]))
       .attr("cy", d => yLinearScale(d[chosenYAxis]))
-      .attr("class", "stateCircle")
-      .attr("r", 15)
+      .attr("class", "Circle")
+      .attr("fill","purple")
+      .attr("r", 18)
       .attr("opacity", ".75");
 
     var textGroup = chartGroup.selectAll(".stateText")
